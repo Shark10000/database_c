@@ -10,7 +10,6 @@ int main() {
     return 0;
 }
 
-
 void handle_request() {
     char request[100];
     scanf("%s", request);

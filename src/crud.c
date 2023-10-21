@@ -4,7 +4,7 @@ void create_table() {
     char full_path[100];
     scanf(" TABLE %s ", full_path);
     create_path(full_path);
-    FILE * new_table = fopen(full_path, "wb");
+    FILE* new_table = fopen(full_path, "wb");
     char new_column[100];
     struct MetaInfo meta;
     int i = 0;
@@ -34,7 +34,7 @@ void insert() {
     create_path(full_path);
     int sizes[SIZE];
     int len = get_size_of_string(full_path, sizes);
-    FILE * table = fopen(full_path, "ab");
+    FILE* table = fopen(full_path, "ab");
     if (!is_available(table)) {
         return;
     }
@@ -62,12 +62,12 @@ void select_data() {
         size += sizes[i - 1];
         prefix[i] = size;
     }
-    FILE * table = fopen(full_path, "r");
+    FILE* table = fopen(full_path, "r");
     if (!is_available(table)) {
         return;
     }
     int stings = count_strings(size, table);
-    for (int j = 0; j < stings; j ++) {
+    for (int j = 0; j < stings; j++) {
         for (int i = 0; i < columns; i++) {
             fseek(table, sizeof(struct MetaInfo) + prefix[i] + size * j, SEEK_SET);
             char record[size];

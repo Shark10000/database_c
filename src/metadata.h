@@ -15,6 +15,6 @@ struct MetaInfo {
     struct ColumnInfo columns[SIZE];
 };
 
-void get_metadata (char * full_path);
-int get_size_of_string (char * full_path, int sizes[SIZE]);
-void get_column_names (char * full_path);
+void get_metadata(char* full_path);
+int get_size_of_string(char* full_path, int sizes[SIZE]);
+void get_column_names(char* full_path);

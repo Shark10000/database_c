@@ -7,7 +7,7 @@ all: build
 rebuild: clean_o build
 
 build: general_functions.o main.o crud.o metadata.o
-	$(CC) main.o general_functions.o crud.o metadata.o -o controler
+	$(CC) main.o general_functions.o crud.o metadata.o -o program
 
 main.o: main.c
 	$(CC) $(FLAGS) -o main.o main.c
@@ -22,7 +22,7 @@ metadata.o: metadata.c
 	$(CC) $(FLAGS) -o metadata.o metadata.c
 
 clean:
-	rm *.o controler ../tables/*
+	rm *.o program ../tables/*
 
 clean_o:
-	rm *.o controler
+	rm *.o program

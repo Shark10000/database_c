@@ -4,14 +4,25 @@ CC = gcc
 
 all: build
 
-build: main.o create_table.o
-	$(CC) main.o create_table.o -o controler
+rebuild: clean_o build
+
+build: general_functions.o main.o crud.o metadata.o
+	$(CC) main.o general_functions.o crud.o metadata.o -o controler
 
 main.o: main.c
 	$(CC) $(FLAGS) -o main.o main.c
 
-create_table.o: create_table.c
-	$(CC) $(FLAGS) -o create_table.o create_table.c
+general_functions.o: general_functions.c
+	$(CC) $(FLAGS) -o general_functions.o general_functions.c
+
+crud.o: crud.c
+	$(CC) $(FLAGS) -o crud.o crud.c
+
+metadata.o: metadata.c
+	$(CC) $(FLAGS) -o metadata.o metadata.c
 
 clean:
-	rm *.o controler ./tables/*
+	rm *.o controler ../tables/*
+
+clean_o:
+	rm *.o controler

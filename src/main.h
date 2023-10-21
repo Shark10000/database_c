@@ -1,11 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "general_functions.h"
+#pragma once
 
-#define table_format ".bin"
-#define table_structure_format ".txt"
-#define db_path "./tables/"
-#define sep " "
+//#include "general_functions.h"
+#include "crud.h"
 
-void create_table(char *request, char *operation);

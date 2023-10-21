@@ -10,16 +10,14 @@ int main() {
     return 0;
 }
 
-
 void handle_request() {
     char request[100];
     scanf("%s", request);
-    char * operation;
-    operation = strtok(request, sep);
-    printf("%s\n", operation);
-    if (!strcmp(operation, "CREATE\0")) {
-        create_table(request, operation);
-    } else if (!strcmp(operation, "SELECT\0")) {
-        printf("select");
+    if (!strcmp(request, "CREATE\0")) {
+        create_table();
+    } else if (!strcmp(request, "SELECT\0")) {
+        select_data();
+    } else if (!strcmp(request, "INSERT\0")) {
+        insert();
     }
 }

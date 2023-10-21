@@ -1,11 +1,9 @@
 #include "crud.h"
 
 void create_table() {
-    char name_of_table[100];
-    scanf(" TABLE %s ", name_of_table);
-    char full_path[100] = db_path;
-    strcat(full_path, name_of_table);
-    strcat(full_path, table_format);
+    char full_path[100];
+    scanf(" TABLE %s ", full_path);
+    create_path(full_path);
     FILE * new_table = fopen(full_path, "wb");
     char new_column[100];
     struct MetaInfo meta;
@@ -31,39 +29,29 @@ void create_table() {
 }
 
 void insert() {
-    char name_of_table[100];
-    scanf(" INTO %s VALUES ", name_of_table);
-    char full_path[100] = db_path;
-    strcat(full_path, name_of_table);
-    strcat(full_path, table_format);
+    char full_path[100];
+    scanf(" INTO %s VALUES ", full_path);
+    create_path(full_path);
     int sizes[SIZE];
     int len = get_size_of_string(full_path, sizes);
-    for (int i = 0; i < len; i++) {
-        printf("%d", sizes[i]);
-    }
     FILE * table = fopen(full_path, "ab");
+    if (!is_available(table)) {
+        return;
+    }
     char data_to_write[SIZE_OF_NAME];
     int j = 0;
     while (getchar() != ')' && j < len) {
         scanf("%30[^,)]", data_to_write);
-        printf("%s", data_to_write);
         fwrite(data_to_write, sizes[j], 1, table);
-        fflush(table);
-        rewind(table);
         j++;
     }
+    fclose(table);
 }
-//
-//void read() {
-//
-//}
 
 void select_data() {
-    char name_of_table[100];
-    scanf(" * FROM %s", name_of_table);
-    char full_path[100] = db_path;
-    strcat(full_path, name_of_table);
-    strcat(full_path, table_format);
+    char full_path[100];
+    scanf(" * FROM %s", full_path);
+    create_path(full_path);
     get_column_names(full_path);
     int sizes[SIZE];
     int columns = get_size_of_string(full_path, sizes);
@@ -74,17 +62,20 @@ void select_data() {
         size += sizes[i - 1];
         prefix[i] = size;
     }
-    FILE * new_table = fopen(full_path, "r");
-    int stings = count_strings(size, new_table);
+    FILE * table = fopen(full_path, "r");
+    if (!is_available(table)) {
+        return;
+    }
+    int stings = count_strings(size, table);
     for (int j = 0; j < stings; j ++) {
         for (int i = 0; i < columns; i++) {
-            fseek(new_table, sizeof(struct MetaInfo) + prefix[i] + size * j, SEEK_SET);
+            fseek(table, sizeof(struct MetaInfo) + prefix[i] + size * j, SEEK_SET);
             char record[size];
-            fread(&record, sizes[i], 1, new_table);
+            fread(&record, sizes[i], 1, table);
             printf("%s ", record);
-            rewind(new_table);
+            rewind(table);
         }
         printf("\n");
     }
-    fclose(new_table);
+    fclose(table);
 }
